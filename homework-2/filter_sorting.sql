@@ -1,23 +1,23 @@
-SELECT ship_country, SUM(freight) AS sum
+-- Напишите запросы, которые выводят следующую информацию:
+-- 1. заказы, доставленные в France, Germany, Spain
+SELECT * FROM orders
+WHERE ship_country IN ('France', 'Germany', 'Spain');
+
+-- 2. уникальные страны и города
+SELECT DISTINCT ship_country, ship_city FROM orders
+ORDER BY ship_country, ship_city;
+
+-- 3. сколько дней в среднем уходит на доставку в Германию
+SELECT AVG(shipped_date - order_date) AS avg_days
 FROM orders
-GROUP BY ship_country
-ORDER BY sum DESC
-LIMIT 3;
+WHERE ship_country = 'Germany';
 
-SELECT order_id, customer_id, freight, ship_country
-FROM orders
-WHERE ship_country IN ('Portugal', 'Poland')
-ORDER BY freight DESC
-LIMIT 10;
-
-SELECT MIN(unit_price) AS min, MAX(unit_price) AS max
-FROM products;
-
-SELECT MIN(unit_price) AS min, MAX(unit_price) AS max
+-- 4. мин и макс цена среди непроданных продуктов
+SELECT MIN(unit_price), MAX(unit_price)
 FROM products
-WHERE discontinued = 0;
+WHERE discontinued <> 1;
 
-SELECT DISTINCT country
-FROM customers
-WHERE country IN ('UK', 'USA')
-ORDER BY country;
+-- 5. мин и макс цена среди непроданных продуктов, которых >= 20
+SELECT MIN(unit_price), MAX(unit_price)
+FROM products
+WHERE discontinued <> 1 AND units_in_stock >= 20;

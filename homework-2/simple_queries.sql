@@ -1,18 +1,16 @@
-SELECT order_id, customer_id, employee_id, order_date, required_date,
-       shipped_date, ship_via, freight, ship_name, ship_address,
-       ship_city, ship_region, ship_postal_code, ship_country
+-- Напишите запросы, которые выводят следующую информацию:
+-- 1. имя контакта и город
+SELECT contact_name, city FROM customers;
+
+-- 2. идентификатор заказа и разница между датами
+SELECT order_id, (shipped_date - order_date) AS delivery_days
 FROM orders;
 
-SELECT DISTINCT ship_country, ship_city
-FROM orders
-ORDER BY ship_country, ship_city;
+-- 3. все города без повторов
+SELECT DISTINCT city FROM customers;
 
-SELECT first_name, last_name, home_phone
-FROM employees;
+-- 4. количество заказов
+SELECT COUNT(*) FROM orders;
 
-SELECT contact_name, city
-FROM customers;
-
-SELECT DISTINCT city
-FROM customers
-ORDER BY city;
+-- 5. количество стран, в которые отгружался товар
+SELECT COUNT(DISTINCT ship_country) FROM orders;
